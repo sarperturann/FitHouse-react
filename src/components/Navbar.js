@@ -1,11 +1,24 @@
 import React, {useState} from 'react';
 import { Link } from 'react-router-dom';
+import { Button } from './Button';
+import './Navbar.css';
 
 function Navbar() {
     const [click, setClick] = useState(false);  //initial value is false
+    const [button ,setButton] = useState(true);
 
     const handleClick = () => setClick(!click); //sets the opposite value of click on click
     const closeMobileMenu = () => setClick(false);
+
+    const displayButton = () => { // if the navbar is not visible, change it to a little menu
+        if(window.innerWidth <= 960)
+            setButton(false);
+        else 
+            setButton(true);
+    };
+
+    window.addEventListener( 'resize', displayButton);
+
     return (
         <>
             <nav className="navbar">
@@ -38,16 +51,12 @@ function Navbar() {
                             </Link>
                         </li>
                         <li className='nav-item'>
-                            <Link to='/personal-trainers' className='nav-links' onClick={closeMobileMenu}>
-                                Personal Trainers
-                            </Link>
-                        </li>
-                        <li className='nav-item'>
                             <Link to='/sign-up' className='nav-links-mobile' onClick={closeMobileMenu}>
                                 Sign Up
                             </Link>
                         </li>
                     </ul>
+                    {button && <Button buttonStyle='btn--outline'>SIGN UP</Button>}
                 </div>
             </nav>
         </>
